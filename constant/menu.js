@@ -1,6 +1,12 @@
 
 export const sidebarMenu = [
   {
+    linkAddress: 'admin-manager',
+    linkName: 'Admin Manager',
+    isDropdown: false,
+    icon: 'pie-chart'
+  },
+  {
     linkAddress: 'Option1',
     linkName: 'Option1',
     isDropdown: false,
