@@ -7,6 +7,36 @@ export const sidebarMenu = [
     icon: 'pie-chart'
   },
   {
+    linkAddress: 'admin-role-mapping',
+    linkName: 'Admin Role Mapping',
+    isDropdown: false,
+    icon: 'pie-chart'
+  },
+  {
+    linkAddress: 'attendance-manager',
+    linkName: 'Attendance Manager',
+    isDropdown: false,
+    icon: 'pie-chart'
+  },
+  {
+    linkAddress: 'children-manager',
+    linkName: 'Children Manager',
+    isDropdown: false,
+    icon: 'pie-chart'
+  },
+  {
+    linkAddress: 'report',
+    linkName: 'Report',
+    isDropdown: false,
+    icon: 'pie-chart'
+  },
+  {
+    linkAddress: 'admin-manager',
+    linkName: 'admin-manager',
+    isDropdown: false,
+    icon: 'pie-chart'
+  },
+  {
     linkAddress: 'Option1',
     linkName: 'Option1',
     isDropdown: false,
