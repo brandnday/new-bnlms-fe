@@ -36,7 +36,7 @@ class AdminModal extends React.Component {
         >
           <Row>
             <Col span={18}>
-              <Form onSubmit={e=>this.props.handleSubmit(e,this.props.form)} encType="multipart/form-data">
+              <Form onSubmit={e=>this.props.onSubmit(e,this.props.form)} encType="multipart/form-data">
               <Form.Item {...formItemLayout} label="nama">
                   {getFieldDecorator("nama", {
                     initialValue: this.props.nama,

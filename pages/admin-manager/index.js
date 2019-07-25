@@ -5,13 +5,13 @@ import DashboardWrapperPage from '../../components/shared/DashboardWrapperPage';
 import { generateColumns } from '../../tools/generators';
 import AdminModal from '../../components/admin-manager/AdminModal'
 import {
-  Button, Input, Select, Col, Table,
+  Button, Input, Col, Table,
 } from 'antd';
+import Select from '../../components/shared/Select'
 const InputGroup = Input.Group;
-const Option = Select.Option;
 
 const data = [{ name: 'test', role: 'admin', status: 'active' }];
-const roleData = [{ id: 0, roleName: 'All' }, { id: 1, roleName: 'super admin' }]
+const roleData = [{ id: 0, text: 'All' }, { id: 1, text: 'super admin' }]
 export default class SiderDemo extends React.Component {
   state = {
     visible: false,
@@ -66,18 +66,13 @@ export default class SiderDemo extends React.Component {
             </Col>
             <Col span={5}>
               <Select
-                onChange={() => { }}
+                onChange={() => console.log("asdf")}
                 size='large'
                 style={{ width: 200 }}
                 value={0}
                 placeholder='Select role'
-              >
-                {roleData.map((item, index) => (
-                  <Option value={item.id} key={index}>
-                    {item.roleName}
-                  </Option>
-                ))}
-              </Select>
+                options={roleData}
+              />
             </Col>
             <Col span={5}>
               <Button
@@ -103,7 +98,7 @@ export default class SiderDemo extends React.Component {
             visible={this.state.visible}
             footer={null}
             onCancel={this.handleCancel}
-            handleSubmit={this.handleSubmit}
+            onSubmit={this.handleSubmit}
             editingid = {this.state.editdata.id}
           />
 
