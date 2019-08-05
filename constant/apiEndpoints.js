@@ -1,0 +1,1 @@
+export const ADMIN_LIST_GET = 'v1/admins/adminList'

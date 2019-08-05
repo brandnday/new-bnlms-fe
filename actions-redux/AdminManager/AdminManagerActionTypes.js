@@ -1,0 +1,1 @@
+export const ADMIN_LIST_UPDATE = 'ac/ADMIN_LIST_UPDATE'
