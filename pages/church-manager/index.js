@@ -4,19 +4,20 @@ import { createStore, applyMiddleware,combineReducers } from 'redux';
 import thunk from 'redux-thunk';
 import 'antd/dist/antd.css';
 import DashboardWrapperPage from '../../components/shared/DashboardWrapperPage';
-import AdminManagerReducer from '../../actions-redux/AdminManager/AdminManagerReducer'
-import AdminManagerPageContent from '../../components/admin-manager/AdminManagerPageContentContainer.js'
+import ChurchManagerReducer from '../../actions-redux/ChurchManager/ChurchManagerReducer'
+import ChurchManagerPageContent from '../../components/ChurchManager/ChurchManagerPageContentContainer.js'
 import { composeWithDevTools } from 'redux-devtools-extension';
+import ChurchManagerPageContentContainer from '../../components/ChurchManager/ChurchManagerPageContentContainer';
 
 const store = createStore(
-  combineReducers({AdminManagerReducer: AdminManagerReducer}),
+  combineReducers({ChurchManagerReducer: ChurchManagerReducer}),
   composeWithDevTools(applyMiddleware(thunk)))
 export default class AdminManagerPage extends React.Component {
   render() {
     return (
       <Provider store={store}>
-      <DashboardWrapperPage title='Dashboard' subtitle=''>
-        <AdminManagerPageContent />
+      <DashboardWrapperPage title='Church Manager' subtitle=''>
+        <ChurchManagerPageContent />
       </DashboardWrapperPage>
       </Provider>
     );

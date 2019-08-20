@@ -11,54 +11,71 @@ import {
 } from "antd";
 class AdminModal extends React.Component {
   state = {
-    loading: false,
+    isLoading: false,
     searchfilter: { name: "" },
     editingdata: { id: "" },
-    nama:'',
-    password:'',
-    email:'',
-    phone:''
   };
-  data = [];
-  componentDidMount() {}
+
   requiredRules = (field)=>([
     {
       required: true,
       message: `Please input ${field}!`
     }
   ])
+
+  handleSubmit=(e)=>{
+    e.preventDefault();
+    this.props.form.validateFieldsAndScroll(async (err, values) => {
+      if(!err){
+        this.setState({isLoading:true})
+        if (this.props.editingIndex===-1){
+          await this.props.insertAdmin(values)
+        } else {
+          this.props.updateAdmin({...values,editingId:this.props.adminList[this.props.editingIndex].id})
+        }
+        this.setState({isLoading:false})
+        this.props.form.resetFields();
+        this.props.onSubmit();
+      }
+    })
+  }
+
   render() {
     const { getFieldDecorator } = this.props.form;
+    const {editingIndex,adminList} = this.props;
     return (
-        <Modal
-
-        {...this.props}
-        >
+        <Modal {...this.props}>
           <Row>
             <Col span={18}>
-              <Form onSubmit={e=>this.props.onSubmit(e,this.props.form)} encType="multipart/form-data">
-              <Form.Item {...formItemLayout} label="nama">
-                  {getFieldDecorator("nama", {
-                    initialValue: this.props.nama,
-                    rules: this.requiredRules("nama")
+              <Form onSubmit={e=>this.handleSubmit(e)}  encType="multipart/form-data">
+              <Form.Item {...formItemLayout} label="username">
+                  {getFieldDecorator("username", {
+                    initialValue: editingIndex>=0?adminList[editingIndex].username:'',
+                    rules: this.requiredRules("username")
                   })(<Input />)}
                 </Form.Item>
                 <Form.Item {...formItemLayout} label="password">
                   {getFieldDecorator("password", {
-                    initialValue: this.props.password,
+                    initialValue: editingIndex>=0?adminList[editingIndex].password:'',
                     rules: this.requiredRules("password")
                   })(<Input />)}
                 </Form.Item>
                 <Form.Item {...formItemLayout} label="email">
                   {getFieldDecorator("email", {
-                    initialValue: this.props.email,
+                    initialValue: editingIndex>=0?adminList[editingIndex].email:'',
                     rules: this.requiredRules("email")
                   })(<Input />)}
                 </Form.Item>
                 <Form.Item {...formItemLayout} label="phone">
                   {getFieldDecorator("phone", {
-                    initialValue: this.props.phone,
+                    initialValue: editingIndex>=0?adminList[editingIndex].phone:'',
                     rules: this.requiredRules("phone")
+                  })(<Input />)}
+                </Form.Item>
+                <Form.Item {...formItemLayout} label="role">
+                  {getFieldDecorator("role", {
+                    initialValue: editingIndex>=0?adminList[editingIndex].role:'',
+                    rules: this.requiredRules("role")
                   })(<Input />)}
                 </Form.Item>
 
@@ -66,8 +83,9 @@ class AdminModal extends React.Component {
                   <Button
                     type="primary"
                     htmlType="submit"
+                    loading={this.state.isLoading}
                   >
-                    {this.props.editingid == -1 ? "Add" : "Update"}
+                    {this.props.editingIndex == -1 ? "Add" : "Update"}
                   </Button>
                 </Form.Item>
               </Form>

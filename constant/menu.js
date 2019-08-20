@@ -7,6 +7,12 @@ export const sidebarMenu = [
     icon: 'pie-chart'
   },
   {
+    linkAddress: 'church-manager',
+    linkName: 'Church Manager',
+    isDropdown: false,
+    icon: 'pie-chart'
+  },
+  {
     linkAddress: 'admin-role-mapping',
     linkName: 'Admin Role Mapping',
     isDropdown: false,
