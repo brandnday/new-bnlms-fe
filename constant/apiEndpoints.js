@@ -6,6 +6,9 @@ const INSERT_UPDATE_DELETE = {
   ADMIN_DATA_UPDATE :'v1/admins/adminUpdate',
   ADMIN_DATA_DELETE :'v1/admins/adminDeactivate',
 
+  ADMINMAPCHURCH_DATA_ADD :'v1/churches/adminAddMapping',
+  ADMINMAPCHURCH_DATA_DELETE :'v1/churches/addminDeleteMapping',
+
   CHURCH_DATA_ADD :'v1/churches/churchAdd',
   CHURCH_DATA_UPDATE :'v1/churches/churchUpdate',
   CHURCH_DATA_DELETE :'v1/churches/churchDeactivate',
@@ -16,3 +19,5 @@ export const ADMIN_NEW_ADD = 'v1/admins/adminAdd'
 export const ADMIN_DATA_UPDATE = 'v1/admins/adminUpdate'
 
 export const CHURCH_LIST_GET = 'v1/churches/churchList'
+export const CHURCH_ALL_LIST_GET = 'v1/churches/churchAll'
+export const CHURCH_MAP_ADMIN_LIST_GET = 'v1/churches/churchAdminMap'

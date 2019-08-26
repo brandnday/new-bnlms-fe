@@ -44,7 +44,7 @@ class AdminModal extends React.Component {
     const { getFieldDecorator } = this.props.form;
     const {editingIndex,adminList} = this.props;
     return (
-        <Modal {...this.props}>
+        <>
           <Row>
             <Col span={18}>
               <Form onSubmit={e=>this.handleSubmit(e)}  encType="multipart/form-data">
@@ -91,7 +91,7 @@ class AdminModal extends React.Component {
               </Form>
             </Col>
           </Row>
-        </Modal>
+        </>
     );
   }
 }

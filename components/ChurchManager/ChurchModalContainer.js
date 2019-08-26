@@ -8,8 +8,8 @@ const mapStateToProps = state => ({
   churchList: selectChurchList(state)
 });
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  insertChurch: values => dispatch(insertChurch(values)),
-  updateChurch: values => dispatch(updateChurch(values))
+  insertChurch: values => dispatch(insertChurch({...values})),
+  updateChurch: values => dispatch(updateChurch({...values}))
 });
 
 export default connect(

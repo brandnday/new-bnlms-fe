@@ -8,8 +8,8 @@ const mapStateToProps = state => ({
   adminList: selectAdminList(state)
 });
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  insertAdmin: values => dispatch(insertAdmin(values)),
-  updateAdmin: values => dispatch(updateAdmin(values))
+  insertAdmin: values => dispatch(insertAdmin({...values})),
+  updateAdmin: values => dispatch(updateAdmin({...values}))
 });
 
 export default connect(

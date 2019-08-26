@@ -14,7 +14,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = (dispatch, ownProps) => ({
   getChurchList: churchname => dispatch(getChurchList(churchname)),
   updateCurrentPagination:(page)=>dispatch(updateCurrentPagination(page)),
-  deleteChurch:(editingId)=>dispatch(deleteChurch(editingId)),
+  deleteChurch:(editingId)=>dispatch(deleteChurch({editingId})),
 });
 
 export default connect(

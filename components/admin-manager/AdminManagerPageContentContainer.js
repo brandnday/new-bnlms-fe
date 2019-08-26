@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 
 import AdminManagerPageContent from './AdminManagerPageContent';
 
-import {getAdminList,insertAdmin,deleteAdmin,updateCurrentPagination} from '../../actions-redux/AdminManager/AdminManagerActionCreator'
+import {getAdminList,getAllChurch,insertAdmin,deleteAdmin,updateCurrentPagination} from '../../actions-redux/AdminManager/AdminManagerActionCreator'
 
 import {selectAdminList, selectCurrentPage,selectTotalData} from '../../actions-redux/AdminManager/AdminManagerReducer'
 
@@ -14,8 +14,9 @@ totalData:selectTotalData(state)
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
     getAdminList:(username,role)=>dispatch(getAdminList(username,role)),
-    insertAdmin:(username,password,email,phone,role)=>dispatch(insertAdmin(username,password,email,phone,role)),
-    deleteAdmin:(editingId)=>dispatch(deleteAdmin(editingId)),
+    getAllChurch:()=>dispatch(getAllChurch()),
+    insertAdmin:(username,password,email,phone,role)=>dispatch(insertAdmin({username,password,email,phone,role})),
+    deleteAdmin:(editingId)=>dispatch(deleteAdmin({editingId})),
     updateCurrentPagination:(page)=>dispatch(updateCurrentPagination(page))
 });
 

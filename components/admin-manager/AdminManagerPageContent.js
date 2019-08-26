@@ -2,7 +2,8 @@ import React from "react";
 import "antd/dist/antd.css";
 import { generateColumns } from "../../tools/generators";
 import AdminModal from "./AdminModalContainer";
-import { Button, Input, Col, Table, Pagination } from "antd";
+import MapChurchModal from "./MapChurchModalContainer";
+import { Button, Input, Col, Table, Pagination,Modal } from "antd";
 import Select from "../shared/Select";
 const InputGroup = Input.Group;
 const roleData = [
@@ -12,19 +13,17 @@ const roleData = [
 export default class AdminManagerPage extends React.Component {
   state = {
     visible: false,
+    modalType: "ADMIN",
     editIndex: -1,
     role: "ALL",
     username: ""
   };
   componentDidMount() {
     this.props.getAdminList(this.state.username, this.state.role);
+    this.props.getAllChurch(this.state.username, this.state.role);
+
   }
 
-  handleOk = e => {
-    this.setState({
-      visible: false
-    });
-  };
   handleSearch = e => {
     this.props.getAdminList(this.state.username, this.state.role);
   };
@@ -33,7 +32,9 @@ export default class AdminManagerPage extends React.Component {
     this.setState({
       visible: false
     });
+    Modal.destroyAll()
   };
+
   handleSubmit = () => {
     this.handleClose();
     this.handleSearch();
@@ -46,6 +47,7 @@ export default class AdminManagerPage extends React.Component {
   handleSearchName = e => {
     this.setState({ username: e.target.value });
   };
+
   handleUpdateRole = e => {
     this.setState({ role: e });
   };
@@ -54,12 +56,14 @@ export default class AdminManagerPage extends React.Component {
     await this.props.deleteAdmin({ editingId });
   };
 
-  showModal = editid => {
+  showModal = (editid,modalType) => {
     this.setState({
       editIndex: editid,
+      modalType,
       visible: true
     });
   };
+
   columns = [
     ...generateColumns([
       { title: "Name", key: "username" },
@@ -72,14 +76,17 @@ export default class AdminManagerPage extends React.Component {
       dataIndex: "id",
       render: (text, record, index) => (
         <span>
-          <a onClick={() => this.showModal(index)}>update</a> &nbsp;
-          <a onClick={() => this.handleDelete(text)}>Delete</a>
+          <a onClick={() => this.showModal(index,'ADMIN')}>update</a>&emsp;
+          <a onClick={() => this.handleDelete(text)}>Delete</a>&emsp;
+          <a onClick={() => this.showModal(text,'MAPCHURCH')}>Church Mapping</a>
         </span>
       )
     }
   ];
 
   render() {
+    const newAdminTitle = this.state.editIndex===-1?"Insert New Admin":"Update Admin"
+    const modalTitle = this.state.modalType === "ADMIN"?newAdminTitle:'Map Admin to church';
     return (
       <div>
         <InputGroup size="large">
@@ -116,7 +123,7 @@ export default class AdminManagerPage extends React.Component {
               icon="add"
               size="large"
               onClick={value => {
-                this.showModal(-1);
+                this.showModal(-1,'ADMIN');
               }}
             >
               Insert New User
@@ -135,14 +142,27 @@ export default class AdminManagerPage extends React.Component {
           total={this.props.totalData}
           onChange={this.handlePageChange}
         />
-        <AdminModal
-          title="Insert New Admin"
+        <Modal
+          title={modalTitle}
           visible={this.state.visible}
           footer={null}
           onCancel={this.handleClose}
-          onSubmit={this.handleSubmit}
-          editingIndex={this.state.editIndex}
-        />
+          destroyOnClose={true}
+        >
+          {this.state.modalType === "ADMIN" ? (
+            <AdminModal
+              editingIndex={this.state.editIndex}
+              onSubmit={this.handleSubmit}
+              onCancel={this.handleClose}
+            />
+          ) : (
+            <MapChurchModal
+              visible={this.state.visibleMap}
+              onCancel={this.handleClose}
+              editingId={this.state.editIndex}
+            />
+          )}
+        </Modal>
       </div>
     );
   }

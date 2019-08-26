@@ -25,6 +25,7 @@ function ChurchManagerReducer(state = initialState, action) {
   });
 }
 
+
 export const selectChurchList = state => state.ChurchManagerReducer.churchList;
 export const selectCurrentPage = state => state.ChurchManagerReducer.currentPage;
 export const selectTotalData = state => state.ChurchManagerReducer.totalData;
