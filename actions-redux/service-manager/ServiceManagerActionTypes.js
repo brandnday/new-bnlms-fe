@@ -1,0 +1,1 @@
+export const SERVICE_LIST_UPDATE = 'lala/SERVICE_LIST_UPDATE'

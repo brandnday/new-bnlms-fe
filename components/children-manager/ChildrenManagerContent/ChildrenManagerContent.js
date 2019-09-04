@@ -1,12 +1,12 @@
 import React from 'react'
 
 import 'antd/dist/antd.css';
-import { generateColumns } from '../../tools/generators';
-import ChildrenManagerModal from './ChildrenManagerModal'
+import { generateColumns } from '../../../tools/generators';
+import ChildrenManagerModal from '../ChildrenManagerModal/ChildrenManagerModalContainer'
 import {
-  Button, Input, Col, Table, Row
+  Button, Input, Col, Table, Row,Modal
 } from 'antd';
-import Select from '../../components/shared/Select'
+import Select from '../../shared/Select'
 const InputGroup = Input.Group;
 
 const data = [{ name: 'test', role: 'admin', status: 'active' }];
@@ -14,9 +14,12 @@ const roleData = [{ id: 0, text: 'All' }, { id: 1, text: 'super admin' }]
 export default class ChildrenManager extends React.Component {
   state = {
     visible: false,
-    editdata: 1
+    editIndex: -1
   }
-
+  componentDidMount(){
+    console.log("test")
+    this.props.getChildrenList();
+  }
   handleOk = e => {
     this.setState({
       visible: false
@@ -29,16 +32,33 @@ export default class ChildrenManager extends React.Component {
     });
   };
 
-  showModal = (editid, name) => {
+
+  handleSubmit = () => {
+    this.handleClose();
+    this.handleSearch();
+  };
+
+  handleClose = () => {
+    
+    this.setState({
+      visible: false
+    });
+    Modal.destroyAll()
+  };
+
+  handleSearch = () => {
+    this.props.getChildrenList();
+  };
+  showModal = (editIndex) => {
     this.setState({
       visible: true,
-      editdata: { id: editid }
+      editIndex
     });
   };
   columns = [
     ...generateColumns([
-      { title: 'Name', key: 'name' },
-      { title: 'Birthday', key: 'birthday' },
+      { title: 'Name', key: 'nickname' },
+      { title: 'Birthday', key: 'birthdate' },
       { title: 'Gender', key: 'gender' },
       { title: 'Last Service', key: 'lastService' }
     ]),
@@ -46,9 +66,9 @@ export default class ChildrenManager extends React.Component {
       title: 'Action',
       key: 'id',
       dataIndex: 'id',
-      render: (text, record) => (
+      render: (text, record,index) => (
         <>
-          <a onClick={() => this.showModal(1, '')}>
+          <a onClick={() => this.showModal(index, '')}>
             Details</a>&nbsp;
           <a onClick={() => this.handleDelete(text)}>
             Delete</a>
@@ -119,7 +139,7 @@ export default class ChildrenManager extends React.Component {
         </InputGroup>
         <Table
           columns={this.columns}
-          dataSource={data}
+          dataSource={this.props.childrenList}
           pagination={false}
           loading={false}
         />
@@ -129,7 +149,7 @@ export default class ChildrenManager extends React.Component {
           footer={null}
           onCancel={this.handleCancel}
           onSubmit={this.handleSubmit}
-          editingid={this.state.editdata.id}
+          editingIndex={this.state.editIndex}
         />
       </>
     );

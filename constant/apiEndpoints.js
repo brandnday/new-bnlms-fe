@@ -12,7 +12,18 @@ const INSERT_UPDATE_DELETE = {
   CHURCH_DATA_ADD :'v1/churches/churchAdd',
   CHURCH_DATA_UPDATE :'v1/churches/churchUpdate',
   CHURCH_DATA_DELETE :'v1/churches/churchDeactivate',
+
+  TERM_DATA_ADD :'v1/terms/termAdd',
+  TERM_DATA_UPDATE :'v1/terms/termUpdate',
+  TERM_DATA_DELETE :'v1/terms/termDeactivate',
+
+  CHILDREN_DATA_ADD :'v1/children/childrenAdd',
+  CHILDREN_DATA_UPDATE :'v1/children/childrenUpdate',
+  CHILDREN_DATA_DELETE :'v1/children/childrenDeactivate',
 }
+
+
+export const TERM_LIST_GET = 'v1/terms/termList'
 
 export const ADMIN_LIST_GET = 'v1/admins/adminList'
 export const ADMIN_NEW_ADD = 'v1/admins/adminAdd'
@@ -21,3 +32,6 @@ export const ADMIN_DATA_UPDATE = 'v1/admins/adminUpdate'
 export const CHURCH_LIST_GET = 'v1/churches/churchList'
 export const CHURCH_ALL_LIST_GET = 'v1/churches/churchAll'
 export const CHURCH_MAP_ADMIN_LIST_GET = 'v1/churches/churchAdminMap'
+
+
+export const CHILDREN_LIST_GET = 'v1/children/childrenList'

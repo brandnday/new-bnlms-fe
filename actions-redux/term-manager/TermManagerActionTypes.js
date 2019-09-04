@@ -1,0 +1,1 @@
+export const TERM_LIST_UPDATE = 'lala/TERM_LIST_UPDATE'

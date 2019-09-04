@@ -10,13 +10,12 @@ export default class Sidebar extends React.Component {
   };
 
   onCollapse = collapsed => {
-    console.log(collapsed);
     this.setState({ collapsed });
   };
   render() {
     return (
 
-      <Sider collapsible collapsed={this.state.collapsed} onCollapse={this.onCollapse}>
+      <Sider collapsed={this.props.collapsed} >
         <div className='logo' />
         <Menu theme='dark' defaultSelectedKeys={['1']} mode='inline'>
           {sidebarMenu.map((menu, indexA) => (
