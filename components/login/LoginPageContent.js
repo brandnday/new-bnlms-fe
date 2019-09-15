@@ -1,15 +1,39 @@
 import React from 'react';
 import { Form, Icon, Input, Button, Card } from 'antd';
+import Router from 'next/router'
+import {signin} from '../../actions-redux/login/LoginActionCreator'
+import { withCookies, Cookies } from 'react-cookie';
 
-export default class NormalLoginForm extends React.Component {
-  handleSubmit = e => {
+class NormalLoginForm extends React.Component {
+  state = {username:'',password:''}
+  handleSubmit = async e => {
     e.preventDefault();
-    this.props.form.validateFields((err, values) => {
-      if (!err) {
-        console.log('Received values of form: ', values);
-      }
-    });
+    const {username,password}=this.state;
+    const sign = await signin(username,password);
+    if(sign){
+      this.props.cookies.set('token', sign, { path: '/' });
+      Router.push({
+        pathname: '/dashboard',
+      })
+    }
+    
   };
+
+  componentDidMount(){
+    console.log('com level',this.props.cookies.get('token'))
+    if(this.props.cookies.get('token')){
+      Router.push({
+        pathname: '/dashboard',
+      })
+    }
+  }
+
+  handleUsernameChange = (e)=>{
+    this.setState({username:e.target.value})
+  }
+  handlePasswordChange = (e)=>{
+    this.setState({password:e.target.value})
+  }
 
   render() {
     return (
@@ -20,6 +44,7 @@ export default class NormalLoginForm extends React.Component {
             <Input
               prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
               placeholder="Username"
+              onChange={this.handleUsernameChange}
             />
         </Form.Item>
         <Form.Item>
@@ -27,6 +52,7 @@ export default class NormalLoginForm extends React.Component {
               prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
               type="password"
               placeholder="Password"
+              onChange={this.handlePasswordChange}
             />
         </Form.Item>
         <Form.Item>
@@ -40,3 +66,5 @@ export default class NormalLoginForm extends React.Component {
     );
   }
 }
+
+export default withCookies(NormalLoginForm);

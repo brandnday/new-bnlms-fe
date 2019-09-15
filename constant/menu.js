@@ -49,14 +49,9 @@ export const sidebarMenu = [
     icon: 'pie-chart'
   },
   {
-    linkname: 'Option2',
-    isDropdown: true,
+    linkAddress: 'logout',
+    linkName: 'LogOut',
+    isDropdown: false,
     icon: 'pie-chart',
-    children: [{
-      linkAddress: 'Option2',
-      linkName: 'Option2a',
-      icon: 'pie-chart',
-      isDropdown: false
-    }]
   }
 ]

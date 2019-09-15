@@ -35,3 +35,8 @@ export const CHURCH_MAP_ADMIN_LIST_GET = 'v1/churches/churchAdminMap'
 
 
 export const CHILDREN_LIST_GET = 'v1/children/childrenList'
+
+// account things
+export const SIGNIN_ENDPOINT = 'v1/users/signin'
+export const GET_AVAILABLE_CHURCH_ENDPOINT = 'v1/churches/availableChurchList'
+export const AUTHORIZE_ENDPOINT = 'v1/users/checkAuthorize'
