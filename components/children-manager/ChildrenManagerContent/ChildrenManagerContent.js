@@ -129,7 +129,7 @@ export default class ChildrenManager extends React.Component {
               />
             </Col>
             <Col span={3}>
-              <Button type='primary' icon='add' size='large' onClick={() => console.log("search")}>Search</Button>
+              <Button type='primary' icon='add' size='large' onClick={this.handleSearch}>Search</Button>
             </Col>
             <Col span={3}>
               <Button type='primary' icon='add' size='large' onClick={value =>this.showModal(-1, '')}>Insert New Children
@@ -142,6 +142,7 @@ export default class ChildrenManager extends React.Component {
           dataSource={this.props.childrenList}
           pagination={false}
           loading={false}
+          rowKey={record => `as${record.uid}`}
         />
         <ChildrenManagerModal
           title="Insert New Admin Role"

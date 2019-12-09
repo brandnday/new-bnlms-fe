@@ -36,14 +36,15 @@ class TermModal extends React.Component {
       const [termstart,termend]=values.termrange;
       const startdate = moment(termstart).format('YYYY-MM-DD');
       const enddate = moment(termend).format('YYYY-MM-DD');
+      const churchid = this.props.churchid
       console.log(startdate)
       console.log(enddate)
       if(!err){
         this.setState({isLoading:true})
         if (this.props.editingIndex===-1){
-          await this.props.insertTerm({startdate,enddate,churchid:0})
+          await this.props.insertTerm({startdate,enddate,churchid})
         } else {
-          this.props.updateTerm({startdate,enddate,churchid:0,editingId:this.props.termList[this.props.editingIndex].id})
+          this.props.updateTerm({startdate,enddate,churchid,editingId:this.props.termList[this.props.editingIndex].id})
         }
         this.setState({isLoading:false})
         this.props.form.resetFields();

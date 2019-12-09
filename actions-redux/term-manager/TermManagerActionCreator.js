@@ -3,8 +3,9 @@ import { callGet, callPost, dynamicData } from "../common";
 import {
   TERM_LIST_GET
 } from "../../constant/apiEndpoints";
+import { selectSelectedChurch } from "../account/AccountReducer";
 export const getTermList = () => async (dispatch, getState) => {
-  const churchid=0;
+  const churchid=selectSelectedChurch(getState());
   const res = await callPost(TERM_LIST_GET, {
     requestData:{churchid},
   });

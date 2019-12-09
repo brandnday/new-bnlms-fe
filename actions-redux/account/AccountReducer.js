@@ -4,7 +4,7 @@ import * as AccountActionTypes from "./AccountActionTypes";
 import { createSelector } from "reselect";
 
 const initialState = {
-  churchId: -1,
+  churchId: -300,
   token: "",
   availableChurchList: []
 };

@@ -38,7 +38,8 @@ export default class ServiceManagerPage extends React.Component {
   };
 
   handleDelete = async editingId => {
-    await this.props.deleteAdmin({ editingId });
+    await this.props.deleteService({ editingId });
+    this.props.getServiceList();
   };
 
   showModal = (editid) => {
@@ -50,9 +51,10 @@ export default class ServiceManagerPage extends React.Component {
 
   columns = [
     ...generateColumns([
-      { title: "Term Name", key: "termname" },
-      { title: "Start date", key: "startdate" },
-      { title: "End date", key: "enddate" }
+      { title: "Term Name", key: "servicename" },
+      { title: "Start time", key: "starttime" },
+      { title: "Start time", key: "latetime" },
+      { title: "End time", key: "endtime" }
     ]),
     {
       title: "Action",
@@ -87,7 +89,7 @@ export default class ServiceManagerPage extends React.Component {
         </InputGroup>
         <Table
           columns={this.columns}
-          dataSource={this.props.termList}
+          dataSource={this.props.serviceList}
           pagination={false}
           loading={false}
         />

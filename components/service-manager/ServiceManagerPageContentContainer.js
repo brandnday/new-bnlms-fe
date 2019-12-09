@@ -4,7 +4,7 @@ import ServiceManagerPageContent from "./ServiceManagerPageContent";
 
 import {
   getServiceList,
-  deleteTerm
+  deleteService
 } from "../../actions-redux/service-manager/ServiceManagerActionCreator";
 
 import { selectServiceList } from "../../actions-redux/service-manager/ServiceManagerReducer";
@@ -14,7 +14,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  getServiceList: () => dispatch(getServiceList())
+  getServiceList: () => dispatch(getServiceList()),
+  deleteService: values => dispatch(deleteService({...values}))
 });
 
 export default connect(

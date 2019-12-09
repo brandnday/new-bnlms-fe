@@ -2,7 +2,7 @@ import React from "react";
 import "antd/dist/antd.css";
 import { generateColumns } from "../../tools/generators";
 import TermModal from "./TermModalContainer";
-import { Button, Input, Col, Table, Pagination,Modal } from "antd";
+import { Button, Input, Col, Table, Pagination, Modal } from "antd";
 import Select from "../shared/Select";
 const InputGroup = Input.Group;
 export default class TermManagerPage extends React.Component {
@@ -14,15 +14,13 @@ export default class TermManagerPage extends React.Component {
   };
   componentDidMount() {
     this.props.getTermList();
-
   }
-
 
   handleClose = () => {
     this.setState({
       visible: false
     });
-    Modal.destroyAll()
+    Modal.destroyAll();
   };
 
   handleSubmit = () => {
@@ -42,7 +40,7 @@ export default class TermManagerPage extends React.Component {
     await this.props.deleteAdmin({ editingId });
   };
 
-  showModal = (editid) => {
+  showModal = editid => {
     this.setState({
       editIndex: editid,
       visible: true
@@ -61,7 +59,7 @@ export default class TermManagerPage extends React.Component {
       dataIndex: "id",
       render: (text, record, index) => (
         <span>
-          <a onClick={() => this.showModal(index,'ADMIN')}>update</a>&emsp;
+          <a onClick={() => this.showModal(index, "ADMIN")}>update</a>&emsp;
           <a onClick={() => this.handleDelete(text)}>Delete</a>&emsp;
         </span>
       )
@@ -69,7 +67,8 @@ export default class TermManagerPage extends React.Component {
   ];
 
   render() {
-    const modalTitle = this.state.editIndex===-1?"Insert New Term":"Update Term"
+    const modalTitle =
+      this.state.editIndex === -1 ? "Insert New Term" : "Update Term";
     return (
       <div>
         <InputGroup size="large">
@@ -79,7 +78,7 @@ export default class TermManagerPage extends React.Component {
               icon="add"
               size="large"
               onClick={value => {
-                this.showModal(-1,'ADMIN');
+                this.showModal(-1, "ADMIN");
               }}
             >
               Insert New User
@@ -105,11 +104,11 @@ export default class TermManagerPage extends React.Component {
           onCancel={this.handleClose}
           destroyOnClose={true}
         >
-            <TermModal
-              editingIndex={this.state.editIndex}
-              onSubmit={this.handleSubmit}
-              onCancel={this.handleClose}
-            />
+          <TermModal
+            editingIndex={this.state.editIndex}
+            onSubmit={this.handleSubmit}
+            onCancel={this.handleClose}
+          />
         </Modal>
       </div>
     );
