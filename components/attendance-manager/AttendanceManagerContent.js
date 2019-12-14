@@ -1,9 +1,8 @@
-import React from "react";
-
+import React, { Fragment } from "react";
+import moment from "moment";
 import "antd/dist/antd.css";
 import { generateColumns } from "../../tools/generators";
-import ChildrenManagerModal from "./AttendanceManagerModal";
-import { Button, Input, Col, Table, Row, DatePicker } from "antd";
+import { Input, Col, Table, Row, DatePicker, Pagination } from "antd";
 import Select from "../shared/Select";
 const InputGroup = Input.Group;
 
@@ -11,18 +10,81 @@ const data = [{ name: "test", role: "admin", status: "active" }];
 export default class AttendanceManager extends React.Component {
   state = {
     visible: false,
-    editdata: 1
+    editdata: 1,
+    serviceId: 0,
+    termId: 0,
+    date: moment(),
+    loading: true,
+    attendanceType: "NOT_ATTEND",
+    name: ""
   };
 
   componentDidMount() {
-    this.props.getTermList();
-    this.props.getServiceList();
+    Promise.all([this.props.getTermList(), this.props.getServiceList()]).then(
+      () => {
+        this.resetFilter();
+      }
+    );
   }
+
+  handlePageChange = async page => {
+    await this.props.updateCurrentPagination(page);
+    this.handleGetAttendanceChildrenList(page);
+  };
+
+  resetFilter = () => {
+    this.setState({
+      serviceId: this.props.serviceList[0].id,
+      termId: this.props.termList[0].id
+    });
+
+    this.handleGetAttendanceChildrenList(1);
+  };
 
   handleOk = e => {
     this.setState({
       visible: false
     });
+  };
+
+  handleGetAttendanceChildrenList = page => {
+    const { date, serviceId, termId, name, attendanceType } = this.state;
+    const requestData = {
+      date: date.format("YYYY-MM-DD"),
+      serviceId,
+      termId,
+      name,
+      churchId: this.props.churchId,
+      attendanceType,
+      pagination: {
+        page,
+        size: 10
+      }
+    };
+    this.props.getAttendanceChildrenList(requestData);
+    console.log(this.props.attendanceChildrenList);
+  };
+
+  handleUpdateAttendanceType = async attendanceType => {
+    await this.setState({ attendanceType });
+    this.handleGetAttendanceChildrenList(1);
+  };
+  handleUpdateNameFilter = async e => {
+    await this.setState({ name: e.target.value });
+    this.handleGetAttendanceChildrenList(1);
+  };
+
+  handleChangeDatePicker = async date => {
+    await this.setState({ date });
+    this.handleGetAttendanceChildrenList(1);
+  };
+  handleUpdateService = async serviceId => {
+    await this.setState({ serviceId });
+    this.handleGetAttendanceChildrenList(1);
+  };
+  handleUpdateTerm = async termId => {
+    await this.setState({ termId });
+    this.handleGetAttendanceChildrenList(1);
   };
 
   handleCancel = e => {
@@ -31,6 +93,23 @@ export default class AttendanceManager extends React.Component {
     });
   };
 
+  handleInsertAttendance = async childrenId => {
+    const { date, serviceId, termId } = this.state;
+    await this.props.insertAttendance({
+      churchId: this.props.churchId,
+      date: date.format("YYYY-MM-DD"),
+      serviceId,
+      termId,
+      childrenId
+    });
+
+    this.handleGetAttendanceChildrenList(1);
+  };
+
+  handleDelete = async editingId => {
+    await this.props.deleteAttendance({ editingId });
+    this.handleGetAttendanceChildrenList(1);
+  };
   showModal = (editid, name) => {
     this.setState({
       visible: true,
@@ -40,106 +119,93 @@ export default class AttendanceManager extends React.Component {
   columns = [
     ...generateColumns([
       { title: "Name", key: "name" },
-      { title: "Birthday", key: "birthday" },
-      { title: "Jam Absen", key: "gender" }
+      { title: "Birthday", key: "birthdate", format: "DD MMM YYYY" },
+      { title: "Attendance Time", key: "time" }
     ]),
     {
       title: "Action",
       key: "id",
       dataIndex: "id",
-      render: (text, record) => (
-        <>
-          <a onClick={() => this.showModal(1, "")}>Absen</a>&nbsp;
+      render: (text, record) =>
+        this.state.attendanceType === "NOT_ATTEND" ? (
+          <a onClick={() => this.handleInsertAttendance(text)}>Absen</a>
+        ) : (
           <a onClick={() => this.handleDelete(text)}>Delete Absen</a>
-        </>
-      )
+        )
     }
   ];
   render() {
     return (
-      <>
+      <Fragment>
         <InputGroup size="large">
-          <Row gutter={16} style={{ marginBottom: 24 }}>
-            <Col span={5}>
-              <Input placeholder="Search name" />
-            </Col>
-          </Row>
           <Row gutter={16} style={{ marginBottom: 24 }}>
             <Col span={8}>
               <DatePicker
-              style={{width:'100%'}}
+                style={{ width: "100%" }}
+                value={this.state.date}
+                onChange={this.handleChangeDatePicker}
               />
             </Col>
             <Col span={8}>
               <Select
-                onChange={() => console.log("asdf")}
+                onChange={this.handleUpdateService}
                 size="large"
                 style={{ width: "100%" }}
-                value={1}
-                label={"Tahun lahir"}
-                placeholder="Tahun Lahir"
-                options={[{ id: 1, text: "January" }]}
-              />
-            </Col>
-            <Col span={8}>
-              <Select
-                onChange={() => console.log("asdf")}
-                size="large"
-                style={{ width: "100%" }}
-                value={1}
-                label={"tanggal"}
-                placeholder="Tanggal"
-                options={[{ id: 1, text: "Tanggal 5" }]}
-              />
-            </Col>
-            <Col span={5}>
-              <Select
-                onChange={() => console.log("asdf")}
-                size="large"
-                style={{ width: "100%" }}
-                value={1}
+                value={this.state.serviceId}
                 label={"Ibadah ke"}
                 placeholder="Ibadah ke"
-                options={[{ id: 1, text: "Ibadah ke 2" }]}
+                options={this.props.serviceList}
               />
             </Col>
-            <Col span={3}>
-              <Button
-                type="primary"
-                icon="add"
+            <Col span={8}>
+              <Select
+                onChange={this.handleUpdateTerm}
                 size="large"
-                onClick={() => console.log("search")}
-              >
-                Search
-              </Button>
+                style={{ width: "100%" }}
+                value={this.state.termId}
+                label={"Term ke"}
+                placeholder="Term ke"
+                options={this.props.termList}
+              />
             </Col>
-            <Col span={3}>
-              <Button
-                type="primary"
-                icon="add"
+          </Row>
+          <Row gutter={16} style={{ marginBottom: 24 }}>
+            <Col span={18}>
+              <Input
+                placeholder="Search name"
+                value={this.state.name}
+                onChange={this.handleUpdateNameFilter}
+              />
+            </Col>
+            <Col span={6}>
+              <Select
+                onChange={this.handleUpdateAttendanceType}
                 size="large"
-                onClick={value => this.showModal(-1, "")}
-              >
-                Insert New Attendance
-              </Button>
+                style={{ width: "100%" }}
+                value={this.state.attendanceType}
+                label={"List type"}
+                placeholder="List type"
+                options={[
+                  { text: "Have Not Attend", id: "NOT_ATTEND" },
+                  { text: "Attended", id: "ATTENDED" }
+                ]}
+              />
             </Col>
           </Row>
         </InputGroup>
         <Table
           columns={this.columns}
-          dataSource={data}
+          dataSource={this.props.attendanceChildrenList}
           pagination={false}
           loading={false}
         />
-        <ChildrenManagerModal
-          title="Insert New Admin Role"
-          visible={this.state.visible}
-          footer={null}
-          onCancel={this.handleCancel}
-          onSubmit={this.handleSubmit}
-          editingid={this.state.editdata.id}
+        <Pagination
+          defaultCurrent={this.props.totalData}
+          pageSize={10}
+          total={this.props.totalData}
+          onChange={this.handlePageChange}
         />
-      </>
+      </Fragment>
     );
   }
 }

@@ -1,6 +1,7 @@
 import produce from "immer";
 
 import * as ServiceManagerActionTypes from "./ServiceManagerActionTypes";
+import { createSelector } from "reselect";
 
 const initialState = {
   serviceList: [],
@@ -21,3 +22,14 @@ function ServiceManagerReducer(state = initialState, action) {
 
 export const selectServiceList = state => state.ServiceManagerReducer.serviceList;
 export default ServiceManagerReducer;
+
+
+
+export const mapServiceListToOptions = createSelector(
+  selectServiceList,
+  serviceList =>
+    serviceList.map(service => ({
+      text: service.servicename,
+      id: service.id
+    }))
+);

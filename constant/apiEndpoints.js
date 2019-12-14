@@ -23,11 +23,16 @@ const INSERT_UPDATE_DELETE = {
 
   CHILDREN_DATA_ADD: "v1/children/childrenAdd",
   CHILDREN_DATA_UPDATE: "v1/children/childrenUpdate",
-  CHILDREN_DATA_DELETE: "v1/children/childrenDeactivate"
+  CHILDREN_DATA_DELETE: "v1/children/childrenDeactivate",
+
+  ATTENDANCE_DATA_ADD: "v1/attendance/childrenAdd",
+  ATTENDANCE_DATA_DELETE: "v1/attendance/childrenDeactivate"
 };
 
 export const TERM_LIST_GET = "v1/terms/termList";
 export const SERVICE_LIST_GET = "v1/services/serviceList";
+export const ATTENDANCE_CHILDREN_LIST_GET = "v1/attendance/childrenList";
+export const ATTENDED_CHILDREN_LIST_GET = "v1/attendance/attendedChildrenList";
 
 export const ADMIN_LIST_GET = "v1/admins/adminList";
 export const ADMIN_NEW_ADD = "v1/admins/adminAdd";

@@ -1,6 +1,7 @@
 import produce from "immer";
 
 import * as TermManagerActionTypes from "./TermManagerActionTypes";
+import { createSelector } from "reselect";
 
 const initialState = {
   termList: [],
@@ -21,3 +22,13 @@ function TermManagerReducer(state = initialState, action) {
 
 export const selectTermList = state => state.TermManagerReducer.termList;
 export default TermManagerReducer;
+
+export const mapTermListToOptions = createSelector(
+  selectTermList,
+  termList =>
+    termList.map(term => ({
+      text: term.termname,
+      id: term.id
+    }))
+);
+
