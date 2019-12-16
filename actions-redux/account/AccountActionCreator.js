@@ -1,13 +1,13 @@
 import * as AccountActionTypes from "./AccountActionTypes";
-import { callGet, callPost, dynamicData } from "../common";
+import { callGet, callPost, dynamicData, callPostWithAuth } from "../common";
 import {
   GET_AVAILABLE_CHURCH_ENDPOINT,AUTHORIZE_ENDPOINT
 } from "../../constant/apiEndpoints";
 import { selectToken, selectSelectedChurch } from "./AccountReducer";
 export const getAvailableChurchList = (nickname) => async (dispatch, getState) => {
-  const res = await callPost(GET_AVAILABLE_CHURCH_ENDPOINT, {
+  const res = await  dispatch(callPostWithAuth(GET_AVAILABLE_CHURCH_ENDPOINT, {
     token:selectToken(getState()),
-  });
+  }));
   res.length>0 && dispatch(updateCurrentChurchId(res[0].id))
   dispatch({
     type: AccountActionTypes.AVAILABLE_CHURCH_UPDATE,
@@ -16,10 +16,9 @@ export const getAvailableChurchList = (nickname) => async (dispatch, getState) =
 };
 
 export const checkAuthorize =  (token,role) =>async (dispatch,getState)=>{
-  const res = await callPost(AUTHORIZE_ENDPOINT, {
-    token,
+  const res = await dispatch(callPostWithAuth(AUTHORIZE_ENDPOINT, {
     role
-  });
+  }));
   return res;
 };
 

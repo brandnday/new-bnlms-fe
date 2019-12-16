@@ -34,6 +34,8 @@ export const SERVICE_LIST_GET = "v1/services/serviceList";
 export const ATTENDANCE_CHILDREN_LIST_GET = "v1/attendance/childrenList";
 export const ATTENDED_CHILDREN_LIST_GET = "v1/attendance/attendedChildrenList";
 
+export const REPORT_BIRTHDAY_GET = "v1/report/birthday";
+
 export const ADMIN_LIST_GET = "v1/admins/adminList";
 export const ADMIN_NEW_ADD = "v1/admins/adminAdd";
 export const ADMIN_DATA_UPDATE = "v1/admins/adminUpdate";
