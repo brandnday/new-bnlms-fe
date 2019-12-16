@@ -25,7 +25,7 @@ export const callPostWithAuth = (url, param = {}) => async (dispatch,getState)=>
 };
 
 export const dynamicData = (dataName, dataAction, requestData) => async (dispatch) =>{
-  const res = await dispatch(callPost(
+  const res = await dispatch(callPostWithAuth(
     dynamicDataEndpointResolver(dataName, dataAction),
     { requestData }
   ));
