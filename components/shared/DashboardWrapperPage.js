@@ -1,6 +1,7 @@
 import React from "react";
 import { Layout, Breadcrumb, Icon, Row, Col, Spin } from "antd";
 import { withCookies, CookiesProvider } from "react-cookie";
+import Head from "next/head";
 import { AuthWrapper } from "./AuthWrapperPage";
 import Router from "next/router";
 import HeaderPage from "./HeaderContainer";
@@ -34,6 +35,10 @@ class DashboardWrapperPage extends React.Component {
     console.log("base level", this.props.cookies);
     return this.state.authorized ? (
       <CookiesProvider>
+        <Head>
+          <meta name="googlebot" content="noindex" />
+          <meta name="googlebot-news" content="nosnippet" />
+        </Head>
         <Layout style={{ minHeight: "100vh" }}>
           <Sidebar collapsed={this.state.collapsed} />
           <Layout>
