@@ -5,8 +5,8 @@ import thunk from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
 
 import AccountReducer, { selectToken } from "./account/AccountReducer";
-const baseUrl = "http://localhost:3001/";
-// const baseUrl = "http://cc1d.gbi1d.org:3001/";
+// const baseUrl = "http://localhost:3001/";
+ const baseUrl = "http://cc1d.gbi1d.org:3001/";
 
 import { dynamicDataEndpointResolver } from "../constant/apiEndpoints";
 export const callGet = async (url, param = {}) => {

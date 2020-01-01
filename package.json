@@ -8,6 +8,7 @@
     "antd": "^3.18.1",
     "axios": "^0.18.0",
     "bluebird": "^3.5.4",
+    "husky": "^3.1.0",
     "immer": "^3.2.0",
     "lodash": "^4.17.15",
     "next": "^8.1.0",
@@ -31,6 +32,11 @@
     "build": "next build",
     "start": "next start",
     "export": "next export && cp -r out/. ~/../../var/www/ccr1d/"
+  },
+  "husky": {
+    "hooks": {
+      "post-merge": "npm run build && npm run export"
+    }
   },
   "keywords": [],
   "author": "",
