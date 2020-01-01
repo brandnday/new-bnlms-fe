@@ -5,6 +5,8 @@ import AttendanceManagerContent from "./Dashboard";
 import { getDashboardNotificationList } from "../../actions-redux/notification-manager/NotificationManagerActionCreator";
 import { selectNotificationList } from "../../actions-redux/notification-manager/NotificationManagerReducer";
 
+import { getFollowUpReport } from "../../actions-redux/report-manager/ReportManagerActionCreator";
+
 const mapStateToProps = state => ({
   // serviceList: mapServiceListToOptions(state),
   // churchId: selectSelectedChurch(state),
@@ -24,7 +26,8 @@ const mapDispatchToProps = {
   //   dispatch(getAttendanceChildrenList(requestData)),
   // insertAttendance: requestData => dispatch(insertAttendance(requestData)),
   // deleteAttendance: requestData => dispatch(deleteAttendance(requestData))
-  getDashboardNotificationList
+  getDashboardNotificationList,
+  getFollowUpReport
 };
 
 export default connect(

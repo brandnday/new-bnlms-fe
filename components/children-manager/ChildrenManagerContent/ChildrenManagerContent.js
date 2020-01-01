@@ -89,7 +89,7 @@ export default class ChildrenManager extends React.Component {
       dataIndex: "id",
       render: (text, record, index) => (
         <>
-          <a onClick={this.handleDownloadAttendance(index)}>
+          <a onClick={this.handleDownloadAttendance(text)}>
             Attendance Report
           </a>
           &nbsp;

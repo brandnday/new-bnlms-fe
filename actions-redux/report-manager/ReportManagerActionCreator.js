@@ -153,7 +153,7 @@ export const downloadPointReportPerTerm = termId => async (
   csvData = res.rows.map((service, INDEX) => ({
     Name: `${service.name} (${service.nickname})`,
     Birthday: moment(service.birthdate).format("DD MMM YYYY"),
-    "Point":service.point
+    Point: service.point
   }));
   csvData = sortBy(csvData, "time");
   downloadCSV({
@@ -162,8 +162,7 @@ export const downloadPointReportPerTerm = termId => async (
     columns: ["Name", "Birthday", "Point"]
   });
 };
-
-export const downloadFollowUpReport = (date, range) => async (
+export const getFollowUpReport = (date, range) => async (
   dispatch,
   getState
 ) => {
@@ -178,6 +177,14 @@ export const downloadFollowUpReport = (date, range) => async (
       churchId
     })
   );
+  return res;
+};
+
+export const downloadFollowUpReport = (date, range) => async (
+  dispatch,
+  getState
+) => {
+  const res = await dispatch(getFollowUpReport(date, range));
   let csvData = [];
   csvData = res.rows.map((service, INDEX) => ({
     Name: `${service.name} (${service.nickname})`,

@@ -60,6 +60,7 @@ export const downloadChildrenAttendance = childrenId => async (
     AttendanceStatus: attendance.attendancestatus === "G" ? "Attend" : "Late"
   }));
   csvData = sortBy(csvData, "Date");
+  console.log(csvData)
   downloadCSV({
     filename: `Attendance of ${csvData[0].Name}.csv`,
     data: csvData,

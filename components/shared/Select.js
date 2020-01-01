@@ -5,7 +5,6 @@ import { Select as Selectan
 const Option = Selectan.Option;
 
 const Select = ({options,...props}) => {
-  console.log(options)
     return (
       <Selectan
       {...props}

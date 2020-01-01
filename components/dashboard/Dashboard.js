@@ -4,6 +4,7 @@ import "antd/dist/antd.css";
 import { generateColumns } from "../../tools/generators";
 import {
   Input,
+  Card,
   Col,
   Table,
   Row,
@@ -22,156 +23,63 @@ export default class AttendanceManager extends React.Component {
     serviceId: 0,
     termId: 0,
     date: moment(),
+    followUpList: [],
     loading: true,
     attendanceType: "NOT_ATTEND",
     name: ""
   };
+  handleChangeFollowUpDateFormat = folup => {
+    return {
+      ...folup,
+      birthdate: moment(folup.birthdate).format("DD MMM YYYY"),
+      lastattendance: moment(folup.lastattendance, "YYYY-MM-DD").format("DD MMM YYYY")
+    };
+  };
+
+  handleGetFollowUpList = async () => {
+    const range = moment().subtract(8, "months");
+    const followUp = await this.props.getFollowUpReport(range, 30);
+    const followUpList =
+      followUp.rows.length > 0
+        ? followUp.rows.map(this.handleChangeFollowUpDateFormat)
+        : [];
+    console.log(followUpList);
+    this.setState({ followUpList });
+  };
 
   componentDidMount() {
     this.props.getDashboardNotificationList();
+    this.handleGetFollowUpList();
   }
 
-  // handlePageChange = async page => {
-  //   await this.props.updateCurrentPagination(page);
-  //   this.handleGetAttendanceChildrenList(page);
-  // };
-
-  // resetFilter = () => {
-  //   this.setState({
-  //     serviceId: this.props.serviceList[0].id,
-  //     termId: this.props.termList[0].id
-  //   });
-
-  //   this.handleGetAttendanceChildrenList(1);
-  // };
-
-  // handleOk = e => {
-  //   this.setState({
-  //     visible: false
-  //   });
-  // };
-
-  // handleUpdateQRAttendance = async e => {
-  //   const { childrenId } = await this.props.getAttendanceChildrenId(
-  //     e.target.value
-  //   );
-  //   if (childrenId === -1) {
-  //     this.setState({
-  //       qrtext: ""
-  //     });
-  //     notification.error({
-  //       message: `Error QR ID not found`,
-  //       placement:'bottomLeft'
-  //     });
-  //   } else {
-  //     const insertAttendance = await this.handleInsertAttendance(childrenId);
-  //     this.setState({
-  //       qrtext: ""
-  //     });
-  //     if(insertAttendance===200){
-
-  //       notification.success({
-  //         message: `Attendance successfully inserted`,
-  //         placement:'bottomLeft'
-  //       });
-  //     }else{
-
-  //     notification.error({
-  //       message: `Attendance already inserted`,
-  //       placement:'bottomLeft'
-  //     });
-  //     }
-
-  //   }
-  // };
-
-  // handleGetAttendanceChildrenList = page => {
-  //   const { date, serviceId, termId, name, attendanceType } = this.state;
-  //   const requestData = {
-  //     date: date.format("YYYY-MM-DD"),
-  //     serviceId,
-  //     termId,
-  //     name,
-  //     churchId: this.props.churchId,
-  //     attendanceType,
-  //     pagination: {
-  //       page,
-  //       size: 10
-  //     }
-  //   };
-  //   this.props.getAttendanceChildrenList(requestData);
-  // };
-
-  // handleUpdateAttendanceType = async attendanceType => {
-  //   await this.setState({ attendanceType });
-  //   this.handleGetAttendanceChildrenList(1);
-  // };
-  // handleUpdateNameFilter = async e => {
-  //   await this.setState({ name: e.target.value });
-  //   this.handleGetAttendanceChildrenList(1);
-  // };
-
-  // handleChangeDatePicker = async date => {
-  //   await this.setState({ date });
-  //   this.handleGetAttendanceChildrenList(1);
-  // };
-  // handleUpdateService = async serviceId => {
-  //   await this.setState({ serviceId });
-  //   this.handleGetAttendanceChildrenList(1);
-  // };
-  // handleUpdateTerm = async termId => {
-  //   await this.setState({ termId });
-  //   this.handleGetAttendanceChildrenList(1);
-  // };
-
-  // handleCancel = e => {
-  //   this.setState({
-  //     visible: false
-  //   });
-  // };
-
-  // handleInsertAttendance = async childrenId => {
-  //   const { date, serviceId, termId } = this.state;
-  //   await this.props.insertAttendance({
-  //     churchId: this.props.churchId,
-  //     date: date.format("YYYY-MM-DD"),
-  //     serviceId,
-  //     termId,
-  //     childrenId
-  //   });
-
-  //   this.handleGetAttendanceChildrenList(1);
-  // };
-
-  // handleDelete = async editingId => {
-  //   await this.props.deleteAttendance({ editingId });
-  //   this.handleGetAttendanceChildrenList(1);
-  // };
-  // showModal = (editid, name) => {
-  //   this.setState({
-  //     visible: true,
-  //     editdata: { id: editid }
-  //   });
-  // };
-  // columns = [
-  //   ...generateColumns([
-  //     { title: "Name", key: "name" },
-  //     { title: "Birthday", key: "birthdate", format: "DD MMM YYYY" },
-  //     { title: "Attendance Time", key: "time" }
-  //   ]),
-  //   {
-  //     title: "Action",
-  //     key: "id",
-  //     dataIndex: "id",
-  //     render: (text, record) =>
-  //       this.state.attendanceType === "NOT_ATTEND" ? (
-  //         <a onClick={() => this.handleInsertAttendance(text)}>Absen</a>
-  //       ) : (
-  //         <a onClick={() => this.handleDelete(text)}>Delete Absen</a>
-  //       )
-  //   }
-  // ];
+  columns = [
+    ...generateColumns([
+      { title: "Name", key: "name" },
+      { title: "Birthday", key: "birthdate" },
+      { title: "Last Attend", key: "lastattendance" }
+    ])
+  ];
   render() {
-    return <Fragment>asdf</Fragment>;
+    return (
+      <Fragment>
+        {this.props.notificationList.map(notif => (
+          <Card>
+            <p>{notif.message}</p>
+          </Card>
+        ))}
+        <br></br>
+
+        <Card>
+          <h2>Follow Up</h2>
+            <Table
+          columns={this.columns}
+          dataSource={this.state.followUpList}
+          pagination={false}
+          loading={false}
+        />
+          </Card>
+        
+      </Fragment>
+    );
   }
 }

@@ -1,5 +1,5 @@
 Arguments: 
-  /usr/local/bin/node /usr/local/Cellar/yarn/1.17.3/libexec/bin/yarn.js add lodash
+  /usr/local/bin/node /usr/local/Cellar/yarn/1.17.3/libexec/bin/yarn.js
 
 PATH: 
   /usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Apple/usr/bin:/Library/Apple/bin:/opt/X11/bin
@@ -14,7 +14,7 @@ Platform:
   darwin x64
 
 Trace: 
-  Error: EACCES: permission denied, unlink '/Users/bryanandreasnday/Public/workspes/learnlearn/Buildyea/node_modules/@babel/generator/node_modules/jsesc/README.md'
+  Error: EACCES: permission denied, mkdir '/Users/bryanandreasnday/Public/workspes/learnlearn/Buildyea/node_modules/@babel/core/node_modules/debug'
 
 npm manifest: 
   {
@@ -27,7 +27,9 @@ npm manifest:
       "antd": "^3.18.1",
       "axios": "^0.18.0",
       "bluebird": "^3.5.4",
+      "husky": "^3.1.0",
       "immer": "^3.2.0",
+      "lodash": "^4.17.15",
       "next": "^8.1.0",
       "papaparse": "^5.1.0",
       "react": "^16.8.6",
@@ -47,7 +49,13 @@ npm manifest:
       "test": "echo \"Error: no test specified\" && exit 1",
       "dev": "next",
       "build": "next build",
-      "start": "next start"
+      "start": "next start",
+      "export": "next export && cp -r out/. ~/../../var/www/ccr1d/"
+    },
+    "husky": {
+      "hooks": {
+        "post-merge": "npm run build && npm run export"
+      }
     },
     "keywords": [],
     "author": "",
@@ -3411,7 +3419,7 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/lodash.throttle/-/lodash.throttle-4.1.1.tgz#c23e91b710242ac70c37f1e1cda9274cc39bf2f4"
     integrity sha1-wj6RtxAkKscMN/HhzaknTMOb8vQ=
   
-  lodash@^4.16.5, lodash@^4.17.10, lodash@^4.17.11, lodash@^4.17.13, lodash@^4.17.4, lodash@^4.17.5:
+  lodash@^4.16.5, lodash@^4.17.10, lodash@^4.17.11, lodash@^4.17.13, lodash@^4.17.15, lodash@^4.17.4, lodash@^4.17.5:
     version "4.17.15"
     resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.15.tgz#b447f6670a0455bbfeedd11392eff330ea097548"
     integrity sha512-8xOcRHvCjnocdS5cpwXQXVzmmh5e5+saE2QGoeQmbKmRS6J3VQppPOIt0MnmE+4xlZoumy0GPG0D0MVIQbNA1A==
