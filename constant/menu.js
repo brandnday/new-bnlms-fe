@@ -57,7 +57,7 @@ export const sidebarMenu = [
     owner: 'OPERATOR'
   },
   {
-    linkAddress: 'notification',
+    linkAddress: 'notification-manager',
     linkName: 'Notification Manager',
     isDropdown: false,
     icon: 'file-text',
