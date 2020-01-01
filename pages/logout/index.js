@@ -4,7 +4,7 @@ import Router from "next/router";
 
 class LogOutPage extends React.Component {
   componentDidMount() {
-    this.props.cookies.remove("token");
+    this.props.cookies.remove("token", { path: '/' });
     Router.push({
       pathname: "/login"
     });
