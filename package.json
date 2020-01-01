@@ -31,7 +31,8 @@
     "dev": "next",
     "build": "next build",
     "start": "next start",
-    "export": "npm install && next export && cp -r out/. ~/../../var/www/ccr1d/"
+    "export": "npm install && next export && cp -r out/. ~/../../var/www/ccr1d/",
+    "deploy": "npm run build && npm run export"
   },
   "husky": {
     "hooks": {
