@@ -6,6 +6,7 @@ import { createSelector } from "reselect";
 const initialState = {
   churchId: -300,
   token: "",
+  role: "",
   availableChurchList: []
 };
 
@@ -22,6 +23,9 @@ function AccountReducer(state = initialState, action) {
       case AccountActionTypes.AVAILABLE_CHURCH_UPDATE:
         draftState.availableChurchList = payload;
         break;
+      case AccountActionTypes.CURRENT_ROLE_UPDATE:
+        draftState.role = payload;
+        break;
       default:
         return state;
     }
@@ -29,17 +33,18 @@ function AccountReducer(state = initialState, action) {
 }
 
 export const selectSelectedChurch = state => state.AccountReducer.churchId;
+export const selectRole = state => state.AccountReducer.role;
 export const selectToken = state => state.AccountReducer.token;
 export const selectAvailableChurchList = state =>
   state.AccountReducer.availableChurchList;
 
-  export const mapAvailableChurchListToOptions = createSelector(
-    selectAvailableChurchList,
-    churchList =>
-      churchList.map(church => ({
-        text: church.churchname,
-        id: church.id
-      }))
-  );
+export const mapAvailableChurchListToOptions = createSelector(
+  selectAvailableChurchList,
+  churchList =>
+    churchList.map(church => ({
+      text: church.churchname,
+      id: church.id
+    }))
+);
 
 export default AccountReducer;

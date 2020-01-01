@@ -1,20 +1,31 @@
-import { connect } from 'react-redux';
+import { connect } from "react-redux";
 
-import ChildrenManagerContent from './ChildrenManagerContent';
+import ChildrenManagerContent from "./ChildrenManagerContent";
 
-import {getChildrenList} from '../../../actions-redux/children-manager/ChildrenManagerActionCreator';
+import {
+  getChildrenList,
+  updateCurrentPagination,
+  downloadChildrenAttendance
+} from "../../../actions-redux/children-manager/ChildrenManagerActionCreator";
 
-import {selectChildrenList }from '../../../actions-redux/children-manager/ChildrenManagerReducer'
-const mapStateToProps = (state)=>({
-childrenList:selectChildrenList(state),
-})
+import {
+  selectChildrenList,
+  selectCurrentPage,
+  selectTotalData
+} from "../../../actions-redux/children-manager/ChildrenManagerReducer";
+const mapStateToProps = state => ({
+  childrenList: selectChildrenList(state),
+  currentPage: selectCurrentPage(state),
+  totalData: selectTotalData(state),
+});
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-    getChildrenList:()=>dispatch(getChildrenList('')),
-    
+  getChildrenList: () => dispatch(getChildrenList("")),
+  updateCurrentPagination: page => dispatch(updateCurrentPagination(page)),
+  downloadChildrenAttendance: childId => dispatch(downloadChildrenAttendance(childId))
 });
 
 export default connect(
   mapStateToProps,
-    mapDispatchToProps
+  mapDispatchToProps
 )(ChildrenManagerContent);

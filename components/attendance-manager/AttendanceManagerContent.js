@@ -2,7 +2,7 @@ import React, { Fragment } from "react";
 import moment from "moment";
 import "antd/dist/antd.css";
 import { generateColumns } from "../../tools/generators";
-import { Input, Col, Table, Row, DatePicker, Pagination } from "antd";
+import { Input, Col, Table, Row, DatePicker, Pagination,notification } from "antd";
 import Select from "../shared/Select";
 const InputGroup = Input.Group;
 
@@ -47,6 +47,40 @@ export default class AttendanceManager extends React.Component {
     });
   };
 
+  handleUpdateQRAttendance = async e => {
+    const { childrenId } = await this.props.getAttendanceChildrenId(
+      e.target.value
+    );
+    if (childrenId === -1) {
+      this.setState({
+        qrtext: ""
+      });
+      notification.error({
+        message: `Error QR ID not found`,
+        placement:'bottomLeft'
+      });
+    } else {
+      const insertAttendance = await this.handleInsertAttendance(childrenId);
+      this.setState({
+        qrtext: ""
+      });
+      if(insertAttendance===200){
+
+        notification.success({
+          message: `Attendance successfully inserted`,
+          placement:'bottomLeft'
+        });
+      }else{
+
+      notification.error({
+        message: `Attendance already inserted`,
+        placement:'bottomLeft'
+      });
+      }
+      
+    }
+  };
+
   handleGetAttendanceChildrenList = page => {
     const { date, serviceId, termId, name, attendanceType } = this.state;
     const requestData = {
@@ -62,7 +96,6 @@ export default class AttendanceManager extends React.Component {
       }
     };
     this.props.getAttendanceChildrenList(requestData);
-    console.log(this.props.attendanceChildrenList);
   };
 
   handleUpdateAttendanceType = async attendanceType => {
@@ -189,6 +222,15 @@ export default class AttendanceManager extends React.Component {
                   { text: "Have Not Attend", id: "NOT_ATTEND" },
                   { text: "Attended", id: "ATTENDED" }
                 ]}
+              />
+            </Col>
+          </Row>
+          <Row gutter={16} style={{ marginBottom: 24 }}>
+            <Col span={18}>
+              <Input
+                placeholder="QR Logging"
+                value={this.state.qrtext}
+                onChange={this.handleUpdateQRAttendance}
               />
             </Col>
           </Row>

@@ -12,7 +12,7 @@ class AttendanceManagerPage extends React.Component {
   render() {
     return (
       <Provider store={store}>
-        <DashboardWrapperPage title="Dashboard" subtitle="" role={'ADMIN'}>
+        <DashboardWrapperPage title="Dashboard" subtitle="" role={'OPERATOR'}>
           <AttendanceManager />
         </DashboardWrapperPage>
       </Provider>

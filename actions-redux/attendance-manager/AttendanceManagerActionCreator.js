@@ -1,8 +1,15 @@
 import * as AttendanceManagerActionTypes from "./AttendanceManagerActionTypes";
 import { callPost, dynamicData, callPostWithAuth } from "../common";
-import { ATTENDANCE_CHILDREN_LIST_GET,ATTENDED_CHILDREN_LIST_GET } from "../../constant/apiEndpoints";
+import {
+  ATTENDANCE_CHILDREN_LIST_GET,
+  ATTENDED_CHILDREN_LIST_GET,
+  ATTENDED_GET_CHILDRENID_GET
+} from "../../constant/apiEndpoints";
 export const getAttendanceChildrenList = requestData => async dispatch => {
-  const ENDPOINT = requestData.attendanceType==='NOT_ATTEND'?ATTENDANCE_CHILDREN_LIST_GET:ATTENDED_CHILDREN_LIST_GET;
+  const ENDPOINT =
+    requestData.attendanceType === "NOT_ATTEND"
+      ? ATTENDANCE_CHILDREN_LIST_GET
+      : ATTENDED_CHILDREN_LIST_GET;
   const res = await dispatch(callPostWithAuth(ENDPOINT, requestData));
   dispatch({
     type: AttendanceManagerActionTypes.ATTENDANCE_CHILDREN_LIST_UPDATE,
@@ -10,6 +17,12 @@ export const getAttendanceChildrenList = requestData => async dispatch => {
   });
 };
 
+export const getAttendanceChildrenId = attendanceid => async dispatch => {
+  const res = await dispatch(
+    callPostWithAuth(ATTENDED_GET_CHILDRENID_GET, { attendanceid })
+  );
+return res;
+};
 export const updateCurrentPagination = page => ({
   type: AttendanceManagerActionTypes.ATTENDANCE_PAGINATION_UPDATE,
   payload: page

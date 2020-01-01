@@ -17,6 +17,11 @@ const INSERT_UPDATE_DELETE = {
   TERM_DATA_UPDATE: "v1/terms/termUpdate",
   TERM_DATA_DELETE: "v1/terms/termDeactivate",
 
+
+  NOTIFICATION_DATA_ADD: "v1/notifications/notificationAdd",
+  NOTIFICATION_DATA_UPDATE: "v1/notifications/notificationUpdate",
+  NOTIFICATION_DATA_DELETE: "v1/notifications/notificationDeactivate",
+
   SERVICE_DATA_ADD: "v1/services/serviceAdd",
   SERVICE_DATA_UPDATE: "v1/services/serviceUpdate",
   SERVICE_DATA_DELETE: "v1/services/serviceDeactivate",
@@ -30,11 +35,20 @@ const INSERT_UPDATE_DELETE = {
 };
 
 export const TERM_LIST_GET = "v1/terms/termList";
+export const NOTIFICATION_LIST_GET = "v1/notifications/notificationList";
+export const DASHBOARDNOTIFICATION_LIST_GET = "v1/notifications/dashboardNotificationList";
 export const SERVICE_LIST_GET = "v1/services/serviceList";
 export const ATTENDANCE_CHILDREN_LIST_GET = "v1/attendance/childrenList";
 export const ATTENDED_CHILDREN_LIST_GET = "v1/attendance/attendedChildrenList";
+export const ATTENDED_GET_CHILDRENID_GET = "v1/attendance/childrenAttendanceId";
 
 export const REPORT_BIRTHDAY_GET = "v1/report/birthday";
+export const REPORT_SERVICE_GET = "v1/report/perService";
+export const REPORT_MONTHLYPERCHILD_GET = "v1/report/childrenAttendancePerService";
+export const REPORT_MONTHLYPERSERVICE_GET = "v1/report/monthlyPerService";
+export const REPORT_YEARLYPERSERVICE_GET = "v1/report/yearlyPerService";
+export const REPORT_FOLLOWUP_GET = "v1/report/followUp";
+export const REPORT_POINT_GET = "v1/report/point";
 
 export const ADMIN_LIST_GET = "v1/admins/adminList";
 export const ADMIN_NEW_ADD = "v1/admins/adminAdd";

@@ -12,6 +12,7 @@ import {
   updateCurrentPagination,
   insertAttendance,
   deleteAttendance,
+  getAttendanceChildrenId
 } from "../../actions-redux/attendance-manager/AttendanceManagerActionCreator";
 import { selectAttendanceChildrenList } from "../../actions-redux/attendance-manager/AttendanceManagerReducer";
 import { selectTotalData } from "../../actions-redux/attendance-manager/AttendanceManagerReducer";
@@ -26,13 +27,13 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = (dispatch, ownProps) => ({
   getTermList: () => dispatch(getTermList()),
   getServiceList: () => dispatch(getServiceList()),
+  getAttendanceChildrenId: attendanceId =>
+    dispatch(getAttendanceChildrenId(attendanceId)),
   updateCurrentPagination: page => dispatch(updateCurrentPagination(page)),
   getAttendanceChildrenList: requestData =>
     dispatch(getAttendanceChildrenList(requestData)),
-  insertAttendance: requestData =>
-    dispatch(insertAttendance(requestData)),
-  deleteAttendance: requestData =>
-    dispatch(deleteAttendance(requestData))
+  insertAttendance: requestData => dispatch(insertAttendance(requestData)),
+  deleteAttendance: requestData => dispatch(deleteAttendance(requestData))
 });
 
 export default connect(

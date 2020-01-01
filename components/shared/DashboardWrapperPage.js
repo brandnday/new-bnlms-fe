@@ -5,7 +5,6 @@ import Head from "next/head";
 import { AuthWrapper } from "./AuthWrapperPage";
 import Router from "next/router";
 import HeaderPage from "./HeaderContainer";
-import { checkAuthorize } from "../../actions-redux/account/AccountActionCreator";
 const { Content, Footer, Header } = Layout;
 import Sidebar from "../../components/shared/Sidebar";
 class DashboardWrapperPage extends React.Component {
@@ -27,12 +26,24 @@ class DashboardWrapperPage extends React.Component {
   };
   authorizePage = async () => {
     const token = this.props.cookies.get("token");
-    const { authorized } = await this.props.checkAuthorize(token);
+    const {
+      authorized,
+      token: newToken,
+      timeout
+    } = await this.props.checkAuthorize(token);
+    newToken && await this.props.cookies.set("token", newToken, { path: "/" });
+    timeout &&
+      Router.push({
+        pathname: "/logout"
+      });
+    !authorized &&
+      Router.push({
+        pathname: "/dashboard"
+      });
     this.setState({ authorized });
   };
 
   render() {
-    console.log("base level", this.props.cookies);
     return this.state.authorized ? (
       <CookiesProvider>
         <Head>
@@ -40,7 +51,7 @@ class DashboardWrapperPage extends React.Component {
           <meta name="googlebot-news" content="nosnippet" />
         </Head>
         <Layout style={{ minHeight: "100vh" }}>
-          <Sidebar collapsed={this.state.collapsed} />
+          <Sidebar collapsed={this.state.collapsed} role={this.props.role} />
           <Layout>
             <HeaderPage
               collapsed={this.state.collapsed}
@@ -65,9 +76,7 @@ class DashboardWrapperPage extends React.Component {
                 )}
               </div>
             </Content>
-            <Footer style={{ textAlign: "center" }}>
-              Ant Design ©2018 Created by Ant UED
-            </Footer>
+            <Footer style={{ textAlign: "center" }}>cc admin </Footer>
           </Layout>
         </Layout>
       </CookiesProvider>

@@ -1,17 +1,16 @@
-import React from 'react'
-import { withCookies } from 'react-cookie';
-import Router from 'next/router'
+import React from "react";
+import { withCookies } from "react-cookie";
+import Router from "next/router";
 
 class LogOutPage extends React.Component {
-  componentDidMount(){
-    this.props.cookies.remove('token');
+  componentDidMount() {
+    this.props.cookies.remove("token");
     Router.push({
-      pathname: '/login',
-    })
+      pathname: "/login"
+    });
   }
   render() {
-    return (
-''    );
+    return "Logging out";
   }
 }
 

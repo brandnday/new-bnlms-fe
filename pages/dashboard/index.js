@@ -1,21 +1,21 @@
-import React from 'react'
-import { Provider } from 'react-redux'
+import React from "react";
+import { Provider } from "react-redux";
 
 import "antd/dist/antd.css";
-import DashboardWrapperPage from '../../components/shared/DashboardWrapperPageContainer';
-import {mixedStore} from '../../actions-redux/common'
+import DashboardWrapperPage from "../../components/shared/DashboardWrapperPageContainer";
+import DashboardPageContent from "../../components/dashboard/DashboardContainer.js";
+import NotificationManagerReducer from "../../actions-redux/notification-manager/NotificationManagerReducer";
 
-const store = mixedStore({})
+import { mixedStore } from "../../actions-redux/common";
+
+const store = mixedStore({ NotificationManagerReducer });
 export default class SiderDemo extends React.Component {
   render() {
     return (
       <Provider store={store}>
-      <DashboardWrapperPage title='Dashboard' subtitle='' role ={'ADMIN'}>
-        test
-         <div>
-          asdfasdf
-        </div>
-      </DashboardWrapperPage>
+        <DashboardWrapperPage title="Dashboard" subtitle="" role={"OPERATOR"}>
+          <DashboardPageContent />
+        </DashboardWrapperPage>
       </Provider>
     );
   }

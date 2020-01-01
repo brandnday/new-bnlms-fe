@@ -18,15 +18,20 @@ function ChildrenManagerReducer(state = initialState, action) {
         draftState.childrenList = payload.rows;
         draftState.totalData = payload.totalData;
         break;
+      case ChildrenManagerActionTypes.CHILDREN_PAGINATION_UPDATE:
+        draftState.currentPage = payload;
+        break;
       default:
         return state;
     }
   });
 }
 
-export const selectChildrenList = state => state.ChildrenManagerReducer.childrenList;
+export const selectChildrenList = state =>
+  state.ChildrenManagerReducer.childrenList;
 
-export const selectCurrentPage = state => state.ChildrenManagerReducer.currentPage;
+export const selectCurrentPage = state =>
+  state.ChildrenManagerReducer.currentPage;
 export const selectTotalData = state => state.ChildrenManagerReducer.totalData;
 
 export default ChildrenManagerReducer;

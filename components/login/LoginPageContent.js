@@ -11,7 +11,8 @@ class NormalLoginForm extends React.Component {
     const { username, password } = this.state;
     const sign = await signin(username, password);
     if (sign) {
-      this.props.cookies.set("token", sign, { path: "/" });
+      await this.props.cookies.remove("token");
+      await this.props.cookies.set("token", sign, { path: "/" });
       Router.push({
         pathname: "/dashboard"
       });
@@ -19,7 +20,6 @@ class NormalLoginForm extends React.Component {
   };
 
   componentDidMount() {
-    console.log("com level", this.props.cookies.get("token"));
     if (this.props.cookies.get("token")) {
       Router.push({
         pathname: "/dashboard"

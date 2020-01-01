@@ -5,6 +5,7 @@ import AdminModal from "./AdminModalContainer";
 import MapChurchModal from "./MapChurchModalContainer";
 import { Button, Input, Col, Table, Pagination,Modal } from "antd";
 import Select from "../shared/Select";
+import { ADMIN_LIST_SIZE } from "../../constant/listSize";
 const InputGroup = Input.Group;
 const roleData = [
   { id: "ALL", text: "All" },
@@ -138,7 +139,7 @@ export default class AdminManagerPage extends React.Component {
         />
         <Pagination
           defaultCurrent={this.props.totalData}
-          pageSize={2}
+          pageSize={ADMIN_LIST_SIZE}
           total={this.props.totalData}
           onChange={this.handlePageChange}
         />

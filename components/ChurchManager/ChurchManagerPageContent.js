@@ -3,6 +3,7 @@ import "antd/dist/antd.css";
 import { generateColumns } from "../../tools/generators";
 import ChurchModal from "./ChurchModalContainer";
 import { Button, Input, Col, Table, Pagination } from "antd";
+import { ADMIN_LIST_SIZE } from "../../constant/listSize";
 const InputGroup = Input.Group;
 export default class ChurchManagerPage extends React.Component {
   state = {
@@ -119,7 +120,7 @@ export default class ChurchManagerPage extends React.Component {
         />
         <Pagination
           defaultCurrent={this.props.totalData}
-          pageSize={2}
+          pageSize={ADMIN_LIST_SIZE}
           total={this.props.totalData}
           onChange={this.handlePageChange}
         />
