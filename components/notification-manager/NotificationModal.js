@@ -31,14 +31,14 @@ class NotificationModal extends React.Component {
           await this.props.insertNotification({
             message,
             priority,
-            expiry_date:moment(expiry_date).format('YYYY-MM-DD'),
+            expiry_date: moment(expiry_date).format("YYYY-MM-DD"),
             churchid
           });
         } else {
           this.props.updateNotification({
             message,
             priority,
-            expiry_date:moment(expiry_date).format('YYYY-MM-DD'),
+            expiry_date: moment(expiry_date).format("YYYY-MM-DD"),
             churchid,
             editingId: this.props.notificationList[this.props.editingIndex].id
           });
@@ -67,17 +67,31 @@ class NotificationModal extends React.Component {
             >
               <Form.Item {...formItemLayout} label="Message">
                 {getFieldDecorator("message", {
-                  initialValue: this.props.notificationList[this.props.editingIndex].message
+                  initialValue:
+                    editingIndex >= 0
+                      ? this.props.notificationList[this.props.editingIndex]
+                          .message
+                      : ""
                 })(<Input />)}
               </Form.Item>
               <Form.Item {...formItemLayout} label="Priority">
                 {getFieldDecorator("priority", {
-                  initialValue: this.props.notificationList[this.props.editingIndex].priority
+                  initialValue:
+                    editingIndex >= 0
+                      ? this.props.notificationList[this.props.editingIndex]
+                          .priority
+                      : ""
                 })(<Input />)}
               </Form.Item>
               <Form.Item {...formItemLayout} label="Expiry Date">
                 {getFieldDecorator("expiry_date", {
-                  initialValue: moment(this.props.notificationList[this.props.editingIndex].expiry_date)
+                  initialValue:
+                    editingIndex >= 0
+                      ? moment(
+                          this.props.notificationList[this.props.editingIndex]
+                            .expiry_date
+                        )
+                      : moment().add(1, "month")
                 })(<DatePicker />)}
               </Form.Item>
 
@@ -85,7 +99,8 @@ class NotificationModal extends React.Component {
                 {getFieldDecorator("churchid", {
                   initialValue:
                     editingIndex >= 0
-                      ? this.props.notificationList[this.props.editingIndex].churchid
+                      ? this.props.notificationList[this.props.editingIndex]
+                          .churchid
                       : -1,
                   rules: this.requiredRules("churchid")
                 })(
