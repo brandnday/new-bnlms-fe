@@ -51,6 +51,7 @@ export default class ChurchManagerPage extends React.Component {
 
   handleDelete = async editingId => {
     await this.props.deleteChurch({ editingId });
+    this.props.getChurchList(this.state.church);
   };
 
   showModal = editid => {

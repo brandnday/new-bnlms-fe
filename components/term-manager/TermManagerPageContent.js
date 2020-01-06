@@ -37,7 +37,8 @@ export default class TermManagerPage extends React.Component {
   };
 
   handleDelete = async editingId => {
-    await this.props.deleteAdmin({ editingId });
+    await this.props.deleteTerm({ editingId });
+    this.props.getTermList();
   };
 
   showModal = editid => {

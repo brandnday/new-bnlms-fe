@@ -12,6 +12,7 @@ const mapStateToProps = (state)=>({
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   getTermList:()=>dispatch(getTermList()),
+  deleteTerm:(termId)=>dispatch(deleteTerm(termId)),
 });
 
 export default connect(

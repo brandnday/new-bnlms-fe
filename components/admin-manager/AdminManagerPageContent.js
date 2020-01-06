@@ -55,6 +55,7 @@ export default class AdminManagerPage extends React.Component {
 
   handleDelete = async editingId => {
     await this.props.deleteAdmin({ editingId });
+    this.handleSearch();
   };
 
   showModal = (editid,modalType) => {

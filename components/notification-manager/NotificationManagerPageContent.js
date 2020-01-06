@@ -38,6 +38,7 @@ export default class NotificationManagerPage extends React.Component {
 
   handleDelete = async editingId => {
     await this.props.deleteNotification({ editingId });
+    this.props.getNotificationList();
   };
 
   showModal = editid => {
@@ -68,7 +69,9 @@ export default class NotificationManagerPage extends React.Component {
 
   render() {
     const modalTitle =
-      this.state.editIndex === -1 ? "Insert New Notification" : "Update Notification";
+      this.state.editIndex === -1
+        ? "Insert New Notification"
+        : "Update Notification";
     return (
       <div>
         <InputGroup size="large">
