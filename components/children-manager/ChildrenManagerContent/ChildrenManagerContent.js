@@ -35,6 +35,11 @@ export default class ChildrenManager extends React.Component {
     });
   };
 
+  handleDelete = async editingId => {
+    await this.props.deleteChildren({ editingId });
+    this.handleSearch();
+  };
+
   handleSubmit = () => {
     this.handleClose();
     this.handleSearch();

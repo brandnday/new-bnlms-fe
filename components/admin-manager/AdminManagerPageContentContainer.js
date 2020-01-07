@@ -16,7 +16,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     getAdminList:(username,role)=>dispatch(getAdminList(username,role)),
     getAllChurch:()=>dispatch(getAllChurch()),
     insertAdmin:(username,password,email,phone,role)=>dispatch(insertAdmin({username,password,email,phone,role})),
-    deleteAdmin:(editingId)=>dispatch(deleteAdmin({editingId})),
+    deleteAdmin:(editingId)=>dispatch(deleteAdmin(editingId)),
     updateCurrentPagination:(page)=>dispatch(updateCurrentPagination(page))
 });
 

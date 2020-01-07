@@ -5,7 +5,8 @@ import ChildrenManagerContent from "./ChildrenManagerContent";
 import {
   getChildrenList,
   updateCurrentPagination,
-  downloadChildrenAttendance
+  downloadChildrenAttendance,
+  deleteChildren,
 } from "../../../actions-redux/children-manager/ChildrenManagerActionCreator";
 
 import {
@@ -22,7 +23,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = (dispatch, ownProps) => ({
   getChildrenList: () => dispatch(getChildrenList("")),
   updateCurrentPagination: page => dispatch(updateCurrentPagination(page)),
-  downloadChildrenAttendance: childId => dispatch(downloadChildrenAttendance(childId))
+  downloadChildrenAttendance: childId => dispatch(downloadChildrenAttendance(childId)),
+  deleteChildren: childId => dispatch(deleteChildren(childId))
 });
 
 export default connect(
