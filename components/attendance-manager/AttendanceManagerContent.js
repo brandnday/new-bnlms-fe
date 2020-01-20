@@ -2,7 +2,15 @@ import React, { Fragment } from "react";
 import moment from "moment";
 import "antd/dist/antd.css";
 import { generateColumns } from "../../tools/generators";
-import { Input, Col, Table, Row, DatePicker, Pagination,notification } from "antd";
+import {
+  Input,
+  Col,
+  Table,
+  Row,
+  DatePicker,
+  Pagination,
+  notification
+} from "antd";
 import Select from "../shared/Select";
 const InputGroup = Input.Group;
 
@@ -16,6 +24,7 @@ export default class AttendanceManager extends React.Component {
     date: moment(),
     loading: true,
     attendanceType: "NOT_ATTEND",
+    attendanceStatus: "A",
     name: ""
   };
 
@@ -57,27 +66,24 @@ export default class AttendanceManager extends React.Component {
       });
       notification.error({
         message: `Error QR ID not found`,
-        placement:'bottomLeft'
+        placement: "bottomLeft"
       });
     } else {
       const insertAttendance = await this.handleInsertAttendance(childrenId);
       this.setState({
         qrtext: ""
       });
-      if(insertAttendance===200){
-
+      if (insertAttendance === 200) {
         notification.success({
           message: `Attendance successfully inserted`,
-          placement:'bottomLeft'
+          placement: "bottomLeft"
         });
-      }else{
-
-      notification.error({
-        message: `Attendance already inserted`,
-        placement:'bottomLeft'
-      });
+      } else {
+        notification.error({
+          message: `Attendance already inserted`,
+          placement: "bottomLeft"
+        });
       }
-      
     }
   };
 
@@ -115,9 +121,14 @@ export default class AttendanceManager extends React.Component {
     await this.setState({ serviceId });
     this.handleGetAttendanceChildrenList(1);
   };
+
   handleUpdateTerm = async termId => {
     await this.setState({ termId });
     this.handleGetAttendanceChildrenList(1);
+  };
+
+  handleUpdateAttendanceStatus = async attendanceStatus => {
+    await this.setState({ attendanceStatus });
   };
 
   handleCancel = e => {
@@ -128,12 +139,25 @@ export default class AttendanceManager extends React.Component {
 
   handleInsertAttendance = async childrenId => {
     const { date, serviceId, termId } = this.state;
+    const time = moment().format("HH:mm");
+    const lateTime = this.props.serviceList.find(
+      service => service.id === serviceId
+    ).latetime;
+    console.log(lateTime)
+    const attendancestatus =
+      this.state.attendanceStatus === "A"
+        ? time < lateTime
+          ? "G"
+          : "L"
+        : this.state.attendanceStatus;
     await this.props.insertAttendance({
       churchId: this.props.churchId,
       date: date.format("YYYY-MM-DD"),
       serviceId,
       termId,
-      childrenId
+      childrenId,
+      time,
+      attendancestatus
     });
 
     this.handleGetAttendanceChildrenList(1);
@@ -231,6 +255,24 @@ export default class AttendanceManager extends React.Component {
                 placeholder="QR Logging"
                 value={this.state.qrtext}
                 onChange={this.handleUpdateQRAttendance}
+              />
+            </Col>
+
+            <Col span={6}>
+              <Select
+                onChange={this.handleUpdateAttendanceStatus}
+                size="large"
+                style={{ width: "100%" }}
+                value={this.state.attendanceStatus}
+                label={"Attendance Status"}
+                placeholder="Attendance Status"
+                options={[
+                  { text: "Automatic", id: "A" },
+                  { text: "Late", id: "L" },
+                  { text: "Forget to bring Card", id: "F" },
+                  { text: "Late & Forget to bring Card", id: "C" },
+                  { text: "All Good", id: "G" }
+                ]}
               />
             </Col>
           </Row>

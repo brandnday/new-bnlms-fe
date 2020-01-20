@@ -105,7 +105,7 @@ class ChildrenManagerModal extends React.Component {
               <Form.Item {...formItemLayout} label="Phone">
                 {getFieldDecorator("phone", {
                   initialValue:
-                    editingIndex >= 0 ? childrenList[editingIndex].phone : "",
+                    editingIndex >= 0 ? childrenList[editingIndex].parentphone : "",
                   rules: this.requiredRules("phone")
                 })(<Input />)}
               </Form.Item>
@@ -149,7 +149,7 @@ class ChildrenManagerModal extends React.Component {
               <Form.Item {...formItemLayout} label="Photo">
                 {getFieldDecorator("photo", {
                   initialValue:
-                    editingIndex >= 0 ? childrenList[editingIndex].photo : "",
+                    editingIndex >= 0 ? childrenList[editingIndex].imgloc : "",
                   rules: this.requiredRules("photo")
                 })(<Input />)}
               </Form.Item>

@@ -30,6 +30,7 @@ export const mapServiceListToOptions = createSelector(
   serviceList =>
     serviceList.map(service => ({
       text: service.servicename,
+      latetime: service.latetime,
       id: service.id
     }))
 );
